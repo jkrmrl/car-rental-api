@@ -2,6 +2,7 @@ import express from "express";
 import connectDB from "./config/database.config.js";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.routes.js";
+import carRoutes from "./routes/cars.routes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ connectDB();
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/cars", carRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
