@@ -108,3 +108,12 @@ export const getCustomerTransactionsService = async (customerId) => {
     throw error;
   }
 };
+
+export const getAllTransactionsService = async () => {
+  try {
+    const transactions = await Transaction.find();
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};

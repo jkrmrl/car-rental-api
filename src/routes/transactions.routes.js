@@ -3,6 +3,7 @@ import {
   createPendingTransactionController,
   approveTransactionController,
   getCustomerTransactionsController,
+  getAllTransactionsController,
 } from "../controllers/transactions.controllers.js";
 import {
   authenticateToken,
@@ -29,6 +30,12 @@ router.get(
   authenticateToken,
   authorizeCustomer,
   getCustomerTransactionsController
+);
+router.get(
+  "/all",
+  authenticateToken,
+  authorizeAdmin,
+  getAllTransactionsController
 );
 
 export default router;
