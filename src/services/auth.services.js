@@ -1,4 +1,5 @@
 import Customer from "../models/customers.model.js";
+import Admin from "../models/admin.model.js";
 import generateToken from "../utils/token.utils.js";
 import { hash, compare } from "bcrypt";
 
@@ -46,7 +47,7 @@ export const loginService = async (email, type, password) => {
         type: user.type,
       };
       const token = generateToken(tokenPayload);
-      return { message: "Admin login successful", token };
+      return token;
     } else {
       user = await Customer.findOne({ email });
       if (!user) {
@@ -66,7 +67,7 @@ export const loginService = async (email, type, password) => {
         type: user.type,
       };
       const token = generateToken(tokenPayload);
-      return { message: "Customer login successful", token };
+      return token;
     }
   } catch (error) {
     throw error;
