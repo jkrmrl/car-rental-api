@@ -1,6 +1,7 @@
 import {
   getAvailableCars,
   createCarService,
+  updateCarService,
 } from "../services/cars.services.js";
 
 export const getCars = async (req, res) => {
@@ -34,5 +35,20 @@ export const createCarController = async (req, res) => {
     res.status(201).json({ message: "Car created successfully", car: newCar });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateCarController = async (req, res) => {
+  try {
+    const { carId } = req.params;
+
+    const updateData = req.body;
+
+    const updatedCar = await updateCarService(carId, updateData);
+    res
+      .status(200)
+      .json({ message: "Car updated successfully", car: updatedCar });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };

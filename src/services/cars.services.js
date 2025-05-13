@@ -29,3 +29,18 @@ export const createCarService = async (
     throw error;
   }
 };
+
+export const updateCarService = async (carId, updateData) => {
+  try {
+    const updatedCar = await Car.findByIdAndUpdate(carId, updateData, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updatedCar) {
+      throw new Error(`Car with ID ${carId} not found`);
+    }
+    return updatedCar;
+  } catch (error) {
+    throw error;
+  }
+};
