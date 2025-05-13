@@ -2,6 +2,7 @@ import {
   getAvailableCars,
   createCarService,
   updateCarService,
+  deleteCarService,
 } from "../services/cars.services.js";
 
 export const getCars = async (req, res) => {
@@ -48,6 +49,18 @@ export const updateCarController = async (req, res) => {
     res
       .status(200)
       .json({ message: "Car updated successfully", car: updatedCar });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteCarController = async (req, res) => {
+  try {
+    const { carId } = req.params;
+
+    const result = await deleteCarService(carId);
+
+    res.status(200).json(result);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

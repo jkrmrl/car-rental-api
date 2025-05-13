@@ -44,3 +44,15 @@ export const updateCarService = async (carId, updateData) => {
     throw error;
   }
 };
+
+export const deleteCarService = async (carId) => {
+  try {
+    const deletedCar = await Car.findByIdAndDelete(carId);
+    if (!deletedCar) {
+      throw new Error(`Car with ID ${carId} not found`);
+    }
+    return { message: `Car with ID ${carId} deleted successfully` };
+  } catch (error) {
+    throw error;
+  }
+};
