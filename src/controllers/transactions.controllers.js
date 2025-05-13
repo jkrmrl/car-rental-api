@@ -1,6 +1,7 @@
 import {
   createPendingTransactionService,
   approveTransactionService,
+  cancelTransactionService,
   getCustomerTransactionsService,
   getAllTransactionsService,
   getTransactionByIdService,
@@ -45,6 +46,24 @@ export const approveTransactionController = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const cancelTransactionController = async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+    const userId = req.user.userId;
+    const userRole = req.user.type;
+
+    const result = await cancelTransactionService(
+      transactionId,
+      userId,
+      userRole
+    );
+
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };
 

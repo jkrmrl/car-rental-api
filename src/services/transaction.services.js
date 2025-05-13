@@ -100,6 +100,41 @@ export const approveTransactionService = async (transactionId, adminId) => {
   }
 };
 
+export const cancelTransactionService = async (
+  transactionId,
+  userId,
+  userRole
+) => {
+  try {
+    const transaction = await Transaction.findById(transactionId);
+    if (!transaction) {
+      throw new Error("Transaction not found");
+    }
+
+    if (transaction.transactionStatus === "CANCELED") {
+      throw new Error("Transaction is already canceled");
+    }
+
+    if (
+      userRole !== "admin" &&
+      transaction.customer._id.toString() !== userId
+    ) {
+      throw new Error("Not authorized to cancel this transaction");
+    }
+
+    transaction.transactionStatus = "CANCELED";
+    await transaction.save();
+
+    await Car.findByIdAndUpdate(transaction.car._id, { status: "AVAILABLE" });
+
+    return {
+      message: `Transaction with ID ${transactionId} has been canceled`,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getCustomerTransactionsService = async (customerId) => {
   try {
     const transactions = await Transaction.find({ "customer._id": customerId });

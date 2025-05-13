@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createPendingTransactionController,
   approveTransactionController,
+  cancelTransactionController,
   getCustomerTransactionsController,
   getAllTransactionsController,
   getTransactionByIdController,
@@ -25,6 +26,18 @@ router.patch(
   authenticateToken,
   authorizeAdmin,
   approveTransactionController
+);
+router.patch(
+  "/:transactionId/cancel",
+  authenticateToken,
+  authorizeCustomer,
+  cancelTransactionController
+);
+router.patch(
+  "/:transactionId/cancel",
+  authenticateToken,
+  authorizeAdmin,
+  cancelTransactionController
 );
 router.get(
   "/",
