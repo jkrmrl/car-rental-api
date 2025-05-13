@@ -1,7 +1,7 @@
 import express from "express";
 import connectDB from "./config/database.config.js";
 import dotenv from "dotenv";
-import userRoutes from "./routes/users.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import carRoutes from "./routes/cars.routes.js";
 
 dotenv.config();
@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 connectDB();
 
 // Routes
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 
 app.listen(PORT, () => {
