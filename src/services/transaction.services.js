@@ -117,3 +117,15 @@ export const getAllTransactionsService = async () => {
     throw error;
   }
 };
+
+export const getTransactionByIdService = async (transactionId) => {
+  try {
+    const transaction = await Transaction.findById(transactionId);
+    if (!transaction) {
+      throw new Error("Transaction not found");
+    }
+    return transaction;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -4,6 +4,7 @@ import {
   approveTransactionController,
   getCustomerTransactionsController,
   getAllTransactionsController,
+  getTransactionByIdController,
 } from "../controllers/transactions.controllers.js";
 import {
   authenticateToken,
@@ -37,5 +38,6 @@ router.get(
   authorizeAdmin,
   getAllTransactionsController
 );
+router.get("/:transactionId", authenticateToken, getTransactionByIdController);
 
 export default router;

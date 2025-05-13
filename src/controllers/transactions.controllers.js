@@ -3,6 +3,7 @@ import {
   approveTransactionService,
   getCustomerTransactionsService,
   getAllTransactionsService,
+  getTransactionByIdService,
 } from "../services/transaction.services.js";
 
 export const createPendingTransactionController = async (req, res) => {
@@ -63,5 +64,15 @@ export const getAllTransactionsController = async (req, res) => {
     res.status(200).json(transactions);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const getTransactionByIdController = async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+    const transaction = await getTransactionByIdService(transactionId);
+    res.status(200).json(transaction);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
