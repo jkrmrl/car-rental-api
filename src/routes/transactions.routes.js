@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createPendingTransactionController,
   approveTransactionController,
+  getCustomerTransactionsController,
 } from "../controllers/transactions.controllers.js";
 import {
   authenticateToken,
@@ -22,6 +23,12 @@ router.patch(
   authenticateToken,
   authorizeAdmin,
   approveTransactionController
+);
+router.get(
+  "/",
+  authenticateToken,
+  authorizeCustomer,
+  getCustomerTransactionsController
 );
 
 export default router;

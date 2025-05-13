@@ -99,3 +99,12 @@ export const approveTransactionService = async (transactionId, adminId) => {
     throw error;
   }
 };
+
+export const getCustomerTransactionsService = async (customerId) => {
+  try {
+    const transactions = await Transaction.find({ "customer._id": customerId });
+    return transactions;
+  } catch (error) {
+    throw error;
+  }
+};
