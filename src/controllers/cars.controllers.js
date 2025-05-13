@@ -1,4 +1,7 @@
-import { getAvailableCars } from "../services/cars.services.js";
+import {
+  getAvailableCars,
+  createCarService,
+} from "../services/cars.services.js";
 
 export const getCars = async (req, res) => {
   try {
@@ -8,5 +11,28 @@ export const getCars = async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to fetch cars", error: error.message });
+  }
+};
+
+export const createCarController = async (req, res) => {
+  try {
+    const { image, name, description, pricePerDay } = req.body;
+
+    if (!image || !name || !description || !pricePerDay) {
+      return res
+        .status(400)
+        .json({ message: "Please provide all required car details." });
+    }
+
+    const newCar = await createCarService(
+      image,
+      name,
+      description,
+      pricePerDay
+    );
+
+    res.status(201).json({ message: "Car created successfully", car: newCar });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

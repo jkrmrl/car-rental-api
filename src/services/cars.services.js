@@ -8,3 +8,24 @@ export const getAvailableCars = async () => {
     throw error;
   }
 };
+
+export const createCarService = async (
+  imageData,
+  name,
+  description,
+  pricePerDay
+) => {
+  try {
+    const newCar = new Car({
+      image: imageData,
+      name,
+      description,
+      pricePerDay,
+    });
+
+    const savedCar = await newCar.save();
+    return savedCar;
+  } catch (error) {
+    throw error;
+  }
+};
