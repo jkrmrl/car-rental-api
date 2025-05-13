@@ -1,18 +1,26 @@
 import {
-  getAvailableCars,
+  getAvailableCarsService,
+  getAllCarsService,
   createCarService,
   updateCarService,
   deleteCarService,
 } from "../services/cars.services.js";
 
-export const getCars = async (req, res) => {
+export const getAvailableCarsController = async (req, res) => {
   try {
-    const cars = await getAvailableCars();
+    const cars = await getAvailableCarsService();
     res.status(200).json(cars);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch cars", error: error.message });
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllCarsController = async (req, res) => {
+  try {
+    const cars = await getAllCarsService();
+    res.status(200).json(cars);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 

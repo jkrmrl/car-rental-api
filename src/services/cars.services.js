@@ -1,8 +1,17 @@
 import Car from "../models/cars.model.js";
 
-export const getAvailableCars = async () => {
+export const getAvailableCarsService = async () => {
   try {
     const cars = await Car.find({ status: "AVAILABLE" });
+    return cars;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllCarsService = async () => {
+  try {
+    const cars = await Car.find();
     return cars;
   } catch (error) {
     throw error;
