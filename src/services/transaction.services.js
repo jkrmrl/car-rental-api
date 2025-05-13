@@ -73,3 +73,29 @@ export const createPendingTransactionService = async (
     throw error;
   }
 };
+
+export const approveTransactionService = async (transactionId, adminId) => {
+  try {
+    const transaction = await Transaction.findById(transactionId);
+    if (!transaction) {
+      throw new Error("Transaction not found");
+    }
+
+    const admin = await Admin.findById(adminId);
+    if (!admin) {
+      throw new Error("Admin not found");
+    }
+
+    transaction.admin = {
+      _id: admin._id,
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+    };
+    transaction.transactionStatus = "APPROVED";
+
+    const updatedTransaction = await transaction.save();
+    return updatedTransaction;
+  } catch (error) {
+    throw error;
+  }
+};

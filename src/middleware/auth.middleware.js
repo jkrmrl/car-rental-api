@@ -24,3 +24,10 @@ export const authorizeCustomer = (req, res, next) => {
   }
   return res.status(403).json({ message: "Customer role required" });
 };
+
+export const authorizeAdmin = (req, res, next) => {
+  if (req.user && req.user.type === "ADMIN") {
+    return next();
+  }
+  return res.status(403).json({ message: "Admin role required" });
+};

@@ -1,4 +1,7 @@
-import { createPendingTransactionService } from "../services/transaction.services.js";
+import {
+  createPendingTransactionService,
+  approveTransactionService,
+} from "../services/transaction.services.js";
 
 export const createPendingTransactionController = async (req, res) => {
   try {
@@ -17,6 +20,25 @@ export const createPendingTransactionController = async (req, res) => {
     res.status(201).json({
       message: "Pending transaction created successfully",
       transaction: newTransaction,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const approveTransactionController = async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+    const adminId = req.user.userId;
+
+    const updatedTransaction = await approveTransactionService(
+      transactionId,
+      adminId
+    );
+
+    res.status(200).json({
+      message: "Transaction approved and admin assigned",
+      transaction: updatedTransaction,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
